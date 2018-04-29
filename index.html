@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>BCSE101 17S2 Programming Assignmen2t </title>
+<style>
+    table {
+        border-collapse: collapse;
+    }
+    th, td {
+        text-align: left;
+        border: 1px solid black;
+        padding: 10px 20px;
+         min-width: 5em;
+    }
+</style>
+    <script src="src/View.js"></script>
+    <script src="src/Candidate.js"></script>
+    <script src="src/Party.js"></script>
+    <script src="src/Electorate.js"></script>
+    <script src="src/Election.js"></script>
+    <script src="src/Controller2014.js"></script>
+    <script src="src/Controller2017.js"></script>
+    <script src="src/Country.js"></script>
+    <script src="lib/loader.js"></script>
+</head>
+<body>
+    <div id="chart_overview"  style="width: 800px; height: 500px;"></div>
+    <div id="chart_overview1" style="width: 800px; height: 500px;"></div>
+    <div id="divDisplay"></div>
+<script>
+    var country // deliberately GLOBAL for debugging!
+    var go = function () {
+    country = new Country()
+    country.addElection(Controller2014.setup())
+    country.addElection(Controller2017.setup())
+
+    let theDisplay = document.getElementById('divDisplay')
+    document.body.style.fontFamily = 'Courier New'
+    theDisplay.innerHTML = country.getAll()
+    google.charts.load('current', {packages: ['corechart', 'bar']});
+    google.charts.setOnLoadCallback(function() {
+      country.renderBarCharts()
+    });
+    google.charts.load('current', {'packages':['bar']});
+    google.charts.setOnLoadCallback(function(){
+      country.drawChart()
+    });
+    console.log(country)
+    }
+    window.onload = go
+</script>
+</body>
+</html>
